@@ -61,23 +61,41 @@ export default class FaceAnalyzer extends Component {
                         <div><button onClick={this.reset}>Retake?</button></div>
                     </div> : <div>
                         {this.renderButtons()}
-                            <Camera
-                                onTakePhoto={(dataUri) => {this.onTakePhoto(dataUri);}}
-                                onCameraError={(error) => {this.onCameraError(error);}}
-                                // idealFacingMode={FACING_MODES.ENVIRONMENT}
-                                idealResolution={{width: 800, height: 600}}
-                                //   imageType = {IMAGE_TYPES.JPG}
-                                //   imageCompression = {0.97}
-                                isMaxResolution={true}
-                                  isImageMirror = {false}
-                                  isSilentMode = {false}
-                                //   isDisplayStartCameraError = {true}
-                                isFullscreen={true}
-                                //   sizeFactor = {1}
-                                onCameraStart={(stream) => {this.onCameraStart(stream);}}
-                                onCameraStop={() => {this.onCameraStop();}}
-                            />
-                            <button style={{margin: "-50px"}}>Take photo</button>
+                        {/* <Camera
+                            onTakePhoto={(dataUri) => {this.onTakePhoto(dataUri);}}
+                            onCameraError={(error) => {this.onCameraError(error);}}
+                            // idealFacingMode={FACING_MODES.ENVIRONMENT}
+                            idealResolution={{width: 800, height: 600}}
+                            //   imageType = {IMAGE_TYPES.JPG}
+                            //   imageCompression = {0.97}
+                            isMaxResolution={true}
+                            isImageMirror={false}
+                            isSilentMode={false}
+                            //   isDisplayStartCameraError = {true}
+                            isFullscreen={true}
+                            //   sizeFactor = {1}
+                            onCameraStart={(stream) => {this.onCameraStart(stream);}}
+                            onCameraStop={() => {this.onCameraStop();}}
+                        /> */}
+                        <Camera
+                            onTakePhoto={(dataUri) => {this.onTakePhoto(dataUri);}}
+                            onCameraError={(error) => {this.onCameraError(error);}}
+                            idealFacingMode={FACING_MODES.ENVIRONMENT}
+                            idealResolution={{width: 640, height: 480}}
+                            imageType={IMAGE_TYPES.JPG}
+                            imageCompression={0.97}
+                            isMaxResolution={false}
+                            isImageMirror={false}
+                            isSilentMode={true}
+                            isDisplayStartCameraError={true}
+                            isFullscreen={true}
+                            sizeFactor={1}
+                            onCameraStart={(stream) => {this.onCameraStart(stream);}}
+                            onCameraStop={() => {this.onCameraStop();}}
+                        />
+                        <button>Take photo</button>
+                        <input type="file" accept="image/*" />
+                        <input type="file" accept="video/*;capture=camcorder" />
                     </div>}
 
             </div >
