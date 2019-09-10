@@ -7,17 +7,6 @@ export default class FaceAnalyzer extends Component {
         photo: null
     }
 
-    componentDidMount() {
-        console.log(navigator)
-        navigator.permissions.query({name: 'camera'})
-            .then((permissionObj) => {
-                console.log(permissionObj.state);
-            })
-            .catch((error) => {
-                console.log('Got error :', error);
-            })
-    }
-
     onTakePhoto(dataUri) {
         // Do stuff with the photo...
         this.setState({photo: dataUri})
