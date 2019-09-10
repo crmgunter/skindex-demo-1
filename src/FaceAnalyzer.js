@@ -7,6 +7,17 @@ export default class FaceAnalyzer extends Component {
         photo: null
     }
 
+    componentDidMount() {
+        console.log(navigator)
+        navigator.permissions.query({name: 'camera'})
+            .then((permissionObj) => {
+                console.log(permissionObj.state);
+            })
+            .catch((error) => {
+                console.log('Got error :', error);
+            })
+    }
+
     onTakePhoto(dataUri) {
         // Do stuff with the photo...
         this.setState({photo: dataUri})
@@ -61,7 +72,7 @@ export default class FaceAnalyzer extends Component {
                         <div><button onClick={this.reset}>Retake?</button></div>
                     </div> : <div>
                         {this.renderButtons()}
-                        {/* <Camera
+                        <Camera
                             onTakePhoto={(dataUri) => {this.onTakePhoto(dataUri);}}
                             onCameraError={(error) => {this.onCameraError(error);}}
                             // idealFacingMode={FACING_MODES.ENVIRONMENT}
@@ -74,22 +85,6 @@ export default class FaceAnalyzer extends Component {
                             //   isDisplayStartCameraError = {true}
                             isFullscreen={true}
                             //   sizeFactor = {1}
-                            onCameraStart={(stream) => {this.onCameraStart(stream);}}
-                            onCameraStop={() => {this.onCameraStop();}}
-                        /> */}
-                        <Camera
-                            onTakePhoto={(dataUri) => {this.onTakePhoto(dataUri);}}
-                            onCameraError={(error) => {this.onCameraError(error);}}
-                            idealFacingMode={FACING_MODES.ENVIRONMENT}
-                            idealResolution={{width: 640, height: 480}}
-                            imageType={IMAGE_TYPES.JPG}
-                            imageCompression={0.97}
-                            isMaxResolution={false}
-                            isImageMirror={false}
-                            isSilentMode={true}
-                            isDisplayStartCameraError={true}
-                            isFullscreen={true}
-                            sizeFactor={1}
                             onCameraStart={(stream) => {this.onCameraStart(stream);}}
                             onCameraStop={() => {this.onCameraStop();}}
                         />
