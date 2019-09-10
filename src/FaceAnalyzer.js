@@ -66,7 +66,7 @@ export default class FaceAnalyzer extends Component {
     }
 
     render() {
-        const {iOS, isChrome} = this.state;
+        const {iOS, isChrome, idealFacingMode} = this.state;
         return (
             <div>
                 {iOS && isChrome ? <input type="file" accept="image/*" /> : this.state.photo ?
@@ -97,7 +97,7 @@ export default class FaceAnalyzer extends Component {
                         {this.renderButtons()}
                     </div> }
                 
-                    {`iOS: ${iOS} || Chrome: ${isChrome}`}
+                    {`iOS: ${iOS} || Chrome: ${isChrome} || Camera facing mode: ${idealFacingMode}`}
             </div >
         );
     }
