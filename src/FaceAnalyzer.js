@@ -12,8 +12,11 @@ export default class FaceAnalyzer extends Component {
     }
 
     componentDidMount() {
-        var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
-        var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+        const iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+        console.log(navigator)
+        console.log(/CriOS/i.test(navigator.userAgent))
+        // var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+        const isChrome = /CriOS/i.test(navigator.userAgent);
         console.log(iOS, isChrome)
         this.setState({iOS, isChrome})
     }
