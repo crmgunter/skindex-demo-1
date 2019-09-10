@@ -7,7 +7,8 @@ import {FaCameraRetro, FaRecycle} from 'react-icons/fa';
 export default class FaceAnalyzer extends Component {
     state = {
         photo: null,
-        idealFacingModeToggle: false 
+        idealFacingModeToggle: false,
+        idealFacingMode: FACING_MODES.USER
     }
 
     componentDidMount() {
@@ -65,8 +66,7 @@ export default class FaceAnalyzer extends Component {
         const {iOS, isChrome} = this.state;
         return (
             <div>
-                {iOS && isChrome ? <input type="file" accept="image/*" /> : false }
-                {this.state.photo ?
+                {iOS && isChrome ? <input type="file" accept="image/*" /> : this.state.photo ?
                     <div>
                         <div><img src={this.state.photo} alt={this.state.photo.name} /></div>
 
@@ -78,7 +78,7 @@ export default class FaceAnalyzer extends Component {
                         <Camera
                             onTakePhoto={(dataUri) => {this.onTakePhoto(dataUri);}}
                             onCameraError={(error) => {this.onCameraError(error);}}
-                            // idealFacingMode={FACING_MODES.ENVIRONMENT}
+                            idealFacingMode={this.state.idealFacingMode}
                             idealResolution={{width: 800, height: 600}}
                             //   imageType = {IMAGE_TYPES.JPG}
                             //   imageCompression = {0.97}
@@ -92,8 +92,9 @@ export default class FaceAnalyzer extends Component {
                             onCameraStop={() => {this.onCameraStop();}}
                         />
                         {this.renderButtons()}
-                    </div>}
-
+                    </div> }
+                
+                    {`iOS: ${iOS} || Chrome: ${isChrome}`}
             </div >
         );
     }
