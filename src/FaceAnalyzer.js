@@ -1,10 +1,20 @@
 import React, {Component, Fragment} from 'react';
 import Camera, {FACING_MODES, IMAGE_TYPES} from 'react-html5-camera-photo';
 import {Link} from 'react-router-dom';
+import {Button} from 'reactstrap';
+import {FaCameraRetro, FaRecycle} from 'react-icons/fa';
 
 export default class FaceAnalyzer extends Component {
     state = {
-        photo: null
+        photo: null,
+        idealFacingModeToggle: false 
+    }
+
+    componentDidMount() {
+        var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+        var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+        console.log(iOS, isChrome)
+        this.setState({iOS, isChrome})
     }
 
     onTakePhoto(dataUri) {
@@ -36,21 +46,26 @@ export default class FaceAnalyzer extends Component {
     renderButtons = () => {
         return (
             <div>
-                <button onClick={(e) => {
-                    this.setState({idealFacingMode: FACING_MODES.USER});
-                }}> FACING_MODES.USER </button>
+                <Button color="info" onClick={(e) => {
+                    this.setState({
+                        idealFacingModeToggle: !this.state.idealFacingModeToggle,
+                        idealFacingMode: this.state.idealFacingModeToggle ? FACING_MODES.USER : FACING_MODES.ENVIRONMENT});
+                }}><FaRecycle/></Button>
 
-                <button onClick={(e) => {
+                {/* <Button color="info" onClick={(e) => {
                     this.setState({idealFacingMode: FACING_MODES.ENVIRONMENT});
-                }}> FACING_MODES.ENVIRONMENT </button>
+                }}> FACING_MODES.ENVIRONMENT </Button> */}
+
+                <Button color="info"><FaCameraRetro/></Button>
             </div>
         );
     }
 
     render() {
-
+        const {iOS, isChrome} = this.state;
         return (
             <div>
+                {iOS && isChrome ? <input type="file" accept="image/*" /> : false }
                 {this.state.photo ?
                     <div>
                         <div><img src={this.state.photo} alt={this.state.photo.name} /></div>
@@ -60,7 +75,6 @@ export default class FaceAnalyzer extends Component {
                         </Link>
                         <div><button onClick={this.reset}>Retake?</button></div>
                     </div> : <div>
-                        {this.renderButtons()}
                         <Camera
                             onTakePhoto={(dataUri) => {this.onTakePhoto(dataUri);}}
                             onCameraError={(error) => {this.onCameraError(error);}}
@@ -77,9 +91,7 @@ export default class FaceAnalyzer extends Component {
                             onCameraStart={(stream) => {this.onCameraStart(stream);}}
                             onCameraStop={() => {this.onCameraStop();}}
                         />
-                        <button>Take photo</button>
-                        <input type="file" accept="image/*" />
-                        <input type="file" accept="video/*;capture=camcorder" />
+                        {this.renderButtons()}
                     </div>}
 
             </div >
