@@ -4,7 +4,8 @@ import Login from './Login';
 import Dashboard from './Dashboard';
 import Header from './Header';
 import AccountForm from './AccountForm';
-import FaceAnalyzer from './FaceAnalyzer'
+import FaceAnalyzer from './FaceAnalyzer';
+import CustomCamera from './CustomCamera';
 
 export default class AppRouter extends Component {
     render() {
@@ -16,6 +17,7 @@ export default class AppRouter extends Component {
                     <Route path="/dashboard" component={Dashboard} />
                     <Route path="/edit-account" component={AccountForm} />
                     <Route path="/analyzer" component={FaceAnalyzer} />
+                    <Route path="/super-secret-camera" component={CustomCamera} />
                 </Switch>
 
             </Router>

@@ -39,6 +39,9 @@ export default class Dashboard extends Component {
                             <Row>
                                 <Link to="analyzer">Analyze your face</Link>
                             </Row>
+                            <Row>
+                                <Link to="super-secret-camera">Analyze your face with my super secret Camera</Link>
+                            </Row>
                         </Col>
                     </Row>
                 </Container>

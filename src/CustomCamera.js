@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import {Button} from 'reactstrap';
 import {FaCameraRetro, FaRecycle} from 'react-icons/fa';
 
-export default class FaceAnalyzer extends Component {
+export default class CustomCamera extends Component {
     state = {
         photo: null,
         idealFacingModeToggle: false,
@@ -20,58 +20,8 @@ export default class FaceAnalyzer extends Component {
         const isChrome = /CriOS/i.test(navigator.userAgent);
         console.log(iOS, isChrome)
         this.setState({iOS, isChrome})
+        this.renderVideo();
     }
-
-    onTakePhoto(dataUri) {
-        // Do stuff with the photo...
-        this.setState({photo: dataUri})
-    }
-
-    onCameraError(error) {
-        console.error('onCameraError', error);
-    }
-
-    onCameraStart(stream) {
-        console.log('onCameraStart');
-    }
-
-    onCameraStop() {
-        console.log('onCameraStop');
-    }
-
-    reset = () => {
-        this.setState({photo: null})
-    }
-
-    onTakePhoto = (dataUri) => {
-        // Do stuff with the dataUri photo...
-        console.log(dataUri)
-        this.setState({photo: dataUri})
-    }
-
-    // handleTakePhoto () {
-    //     const {sizeFactor, imageType, imageCompression, isImageMirror, isSilentMode} = this.props;
-    //     const configDataUri = { sizeFactor, imageType, imageCompression, isImageMirror };
-    
-    //     if (!isSilentMode) {
-    //       playClickAudio();
-    //     }
-    
-    //     let dataUri = this.libCameraPhoto.getDataUri(configDataUri);
-    //     this.props.onTakePhoto(dataUri);
-    
-    //     this.setState({
-    //       dataUri,
-    //       isShowVideo: false
-    //     });
-    
-    //     this.clearShowVideoTimeout();
-    //     this.showVideoTimeoutId = setTimeout(() => {
-    //       this.setState({
-    //         isShowVideo: true
-    //       });
-    //     }, 900);
-    //   }
 
     renderButtons = () => {
         return (
@@ -92,6 +42,33 @@ export default class FaceAnalyzer extends Component {
         );
     }
 
+    renderVideo = () => {
+        const player = document.getElementById("player");
+        const canvas = document.getElementById("canvas");
+        const context = canvas.getContext("2d");
+        const captureButton = document.getElementById("capture");
+
+        const constraints = {
+            video: true
+        };
+
+        captureButton.addEventListener("click", () => {
+            // Draw the video frame to the canvas.
+            console.log(player)
+            context.drawImage(player, 0, 0, canvas.width, canvas.height);
+            player.srcObject.getVideoTracks().forEach(track => {
+                console.log(track)
+                this.setState({photo: track})
+                track.stop()
+            });
+        });
+
+        // Attach the video stream to the video element and autoplay.
+        navigator.mediaDevices.getUserMedia(constraints).then(stream => {
+            player.srcObject = stream;
+        });
+    }
+
     render() {
         const {iOS, isChrome, idealFacingMode} = this.state;
         return (
@@ -105,23 +82,13 @@ export default class FaceAnalyzer extends Component {
                         </Link>
                         <div><button onClick={this.reset}>Retake?</button></div>
                     </div> : <div>
-                        <Camera
-                            onTakePhoto={(dataUri) => {this.onTakePhoto(dataUri);}}
-                            onCameraError={(error) => {this.onCameraError(error);}}
-                            // idealFacingMode={FACING_MODES.ENVIRONMENT}
-                            idealResolution={{width: 800, height: 800}}
-                            //   imageType = {IMAGE_TYPES.JPG}
-                            //   imageCompression = {0.97}
-                            isMaxResolution={true}
-                            //   isImageMirror = {false}
-                            //   isSilentMode = {true}
-                            //   isDisplayStartCameraError = {true}
-                            isFullscreen={false}
-                            //   sizeFactor = {1}
-                            onCameraStart={(stream) => {this.onCameraStart(stream);}}
-                            onCameraStop={() => {this.onCameraStop();}}
-                        />
+                        <a href="http://localhost:8080">Link to CSP</a>
+                        <img src="" alt="blah" id="image" />
+                        <video id="player" autoPlay={true}></video>
+                        <button id="capture">Capture</button>
+                        <canvas id="canvas" width="320" height="240"></canvas>
                         {this.renderButtons()}
+                        {this.state.photo}
                     </div>}
 
                 {`iOS: ${iOS} || Chrome: ${isChrome} || Camera facing mode: ${idealFacingMode}`}
@@ -129,5 +96,3 @@ export default class FaceAnalyzer extends Component {
         );
     }
 }
-
-
