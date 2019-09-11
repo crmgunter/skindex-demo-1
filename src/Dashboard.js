@@ -42,6 +42,9 @@ export default class Dashboard extends Component {
                             <Row>
                                 <Link to="super-secret-camera">Analyze your face with my super secret Camera</Link>
                             </Row>
+                            <Row>
+                                <a href="http://localhost:8080">Link to CSP</a>
+                            </Row>
                         </Col>
                     </Row>
                 </Container>

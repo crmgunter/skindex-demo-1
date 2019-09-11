@@ -82,7 +82,6 @@ export default class CustomCamera extends Component {
                         </Link>
                         <div><button onClick={this.reset}>Retake?</button></div>
                     </div> : <div>
-                        <a href="http://localhost:8080">Link to CSP</a>
                         <img src="" alt="blah" id="image" />
                         <video id="player" autoPlay={true}></video>
                         <button id="capture">Capture</button>
