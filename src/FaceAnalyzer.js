@@ -108,7 +108,7 @@ export default class FaceAnalyzer extends Component {
                         <Camera
                             onTakePhoto={(dataUri) => {this.onTakePhoto(dataUri);}}
                             onCameraError={(error) => {this.onCameraError(error);}}
-                            // idealFacingMode={FACING_MODES.ENVIRONMENT}
+                            idealFacingMode={FACING_MODES.USER}
                             idealResolution={{width: 800, height: 800}}
                             //   imageType = {IMAGE_TYPES.JPG}
                             //   imageCompression = {0.97}
